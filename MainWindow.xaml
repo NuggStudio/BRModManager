@@ -1,0 +1,1043 @@
+﻿<Window x:Class="BrickRigsModManager.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:BrickRigsModManager"
+        Title="BrickRigs Mod Manager" MinHeight="700" MinWidth="1000"
+        Background="{DynamicResource BackgroundBrush}"
+        
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="CanResize">
+
+
+    <Window.Resources>
+        
+        
+
+        <!-- Semi-transparent styles for Mica effect -->
+        <SolidColorBrush x:Key="MicaBackgroundBrush" Color="#40252526"/>
+        <SolidColorBrush x:Key="MicaBorderBrush" Color="#403F3F46"/>
+        <SolidColorBrush x:Key="MicaButtonBrush" Color="#402D2D30"/>
+        <SolidColorBrush x:Key="MicaHeaderBrush" Color="#402D2D30"/>
+        <SolidColorBrush x:Key="MicaHoverBrush" Color="#403E3E42"/>
+        <SolidColorBrush x:Key="MicaAccentBrush" Color="#40007ACC"/>
+
+        <!-- Transparent Border Style -->
+        <Style x:Key="MicaBorder" TargetType="Border">
+            <Setter Property="Background" Value="{StaticResource MicaBackgroundBrush}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource MicaBorderBrush}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="6"/>
+        </Style>
+
+        <!-- Transparent Button Style -->
+        <Style x:Key="MicaButton" TargetType="Button">
+            <Setter Property="Background" Value="{StaticResource MicaButtonBrush}"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderBrush" Value="{StaticResource MicaBorderBrush}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="16,8"/>
+            <Setter Property="Margin" Value="4"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="FontWeight" Value="Normal"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                BorderBrush="{TemplateBinding BorderBrush}"
+                BorderThickness="{TemplateBinding BorderThickness}"
+                CornerRadius="4">
+                            <ContentPresenter HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Margin="{TemplateBinding Padding}"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="{StaticResource MicaHoverBrush}"/>
+                                <Setter Property="BorderBrush" Value="{StaticResource MicaAccentBrush}"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" Value="{StaticResource MicaAccentBrush}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Transparent ComboBox Style -->
+        <Style x:Key="MicaComboBox" TargetType="ComboBox">
+            <Setter Property="Background" Value="{StaticResource MicaButtonBrush}"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderBrush" Value="{StaticResource MicaBorderBrush}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="8,6"/>
+            <Setter Property="Height" Value="32"/>
+            <Setter Property="FontSize" Value="13"/>
+            <!-- Rest of your ComboBox style -->
+        </Style>
+
+
+        <Style x:Key="TransparentPanel" TargetType="Panel">
+            <Setter Property="Background" Value="#99252526"/>
+        </Style>
+
+        <Style x:Key="TransparentBorder" TargetType="Border">
+            <Setter Property="Background" Value="#99252526"/>
+            <Setter Property="BorderBrush" Value="#993F3F46"/>
+        </Style>
+
+        <!-- Modified button styles with semi-transparency -->
+        <Style x:Key="TransparentModernButton" TargetType="Button" BasedOn="{StaticResource ModernButton}">
+            <Setter Property="Background" Value="#992D2D30"/>
+            <Setter Property="BorderBrush" Value="#993F3F46"/>
+        </Style>
+
+        <Style x:Key="TransparentNavButton" TargetType="Button" BasedOn="{StaticResource ModernButton}">
+            <Setter Property="Background" Value="#40000000"/>
+        </Style>
+
+        <Style TargetType="{x:Type ScrollViewer}">
+            <Setter Property="HorizontalScrollBarVisibility" Value="Hidden"/>
+            <Setter Property="VerticalScrollBarVisibility" Value="Hidden"/>
+            <Setter Property="PanningMode" Value="Both"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ScrollViewer}">
+                        <Grid>
+                            <ScrollContentPresenter />
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Invisible ScrollBar Style -->
+        <Style x:Key="InvisibleScrollViewer" TargetType="{x:Type ScrollViewer}">
+            <Setter Property="HorizontalScrollBarVisibility" Value="Hidden"/>
+            <Setter Property="VerticalScrollBarVisibility" Value="Hidden"/>
+            <Setter Property="PanningMode" Value="Both"/>
+        </Style>
+
+
+
+        <Style x:Key="ModernProgressBar" TargetType="ProgressBar">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Foreground" Value="#FF007ACC"/>
+            <Setter Property="Height" Value="4"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ProgressBar">
+                        <Grid>
+                            <Border Background="#FF3F3F46" 
+                              CornerRadius="2" 
+                              Height="4"/>
+                            <Border x:Name="PART_Indicator" 
+                              Background="{TemplateBinding Foreground}" 
+                              CornerRadius="2" 
+                              HorizontalAlignment="Left"
+                              Height="4"/>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="ModernComboBox" TargetType="ComboBox">
+            <Setter Property="Background" Value="#FF2D2D30"/>
+            <Setter Property="Foreground" Value="{DynamicResource ForegroundBrush}"/>
+            <Setter Property="BorderBrush" Value="{DynamicResource BackgroundBrush}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="8,6"/>
+            <Setter Property="Height" Value="32"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ComboBox">
+                        <Grid>
+                            <ToggleButton x:Name="ToggleButton"
+                                    Background="{DynamicResource BackgroundBrush}"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                    Foreground="{TemplateBinding Foreground}"
+                                    Padding="{TemplateBinding Padding}"
+                                    IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}">
+                                <ToggleButton.Style>
+                                    <Style TargetType="ToggleButton">
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate TargetType="ToggleButton">
+                                                    <Border Background="{DynamicResource BackgroundBrush}"
+                                                      BorderBrush="{TemplateBinding BorderBrush}"
+                                                      BorderThickness="{TemplateBinding BorderThickness}"
+                                                      CornerRadius="4">
+                                                        <Grid>
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="*"/>
+                                                                <ColumnDefinition Width="Auto"/>
+                                                            </Grid.ColumnDefinitions>
+                                                            <ContentPresenter Grid.Column="0"
+                                                                        Margin="{TemplateBinding Padding}"
+                                                                        HorizontalAlignment="Left"
+                                                                        VerticalAlignment="Center"/>
+                                                            <Path Grid.Column="1"
+                                                            Width="8" Height="5" 
+                                                            Margin="0,0,8,0"
+                                                            Fill="{TemplateBinding Foreground}"
+                                                            Data="M 0,0 L 8,0 L 4,5 Z"/>
+                                                        </Grid>
+                                                    </Border>
+                                                    <ControlTemplate.Triggers>
+                                                        <Trigger Property="IsMouseOver" Value="True">
+                                                            <Setter Property="Background" Value="{DynamicResource BackgroundBrush}"/>
+                                                            <Setter Property="BorderBrush" Value="#FF007ACC"/>
+                                                        </Trigger>
+                                                        <Trigger Property="IsChecked" Value="True">
+                                                            <Setter Property="BorderBrush" Value="#FF007ACC"/>
+                                                        </Trigger>
+                                                    </ControlTemplate.Triggers>
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Style>
+                                </ToggleButton.Style>
+                                <ToggleButton.Content>
+                                    <ContentPresenter Content="{TemplateBinding SelectionBoxItem}"
+                                                ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
+                                                ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"/>
+                                </ToggleButton.Content>
+                            </ToggleButton>
+                            <Popup x:Name="PART_Popup"
+                             AllowsTransparency="True"
+                             IsOpen="{Binding IsDropDownOpen, RelativeSource={RelativeSource TemplatedParent}}"
+                             Placement="Bottom"
+                             PopupAnimation="Slide"
+                             StaysOpen="False">
+                                <Border Background="{DynamicResource BackgroundBrush}"
+                                  BorderBrush="#FF3F3F46"
+                                  BorderThickness="1"
+                                  CornerRadius="4"
+                                  MaxHeight="{TemplateBinding MaxDropDownHeight}"
+                                  MinWidth="{Binding ActualWidth, ElementName=ToggleButton}">
+                                    <ScrollViewer SnapsToDevicePixels="True">
+                                        <ItemsPresenter KeyboardNavigation.DirectionalNavigation="Contained"/>
+                                    </ScrollViewer>
+                                </Border>
+                            </Popup>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Resources>
+                <!-- Item Container Style -->
+                <Style TargetType="ComboBoxItem">
+                    <Setter Property="Background" Value="Transparent"/>
+                    <Setter Property="Foreground" Value="White"/>
+                    <Setter Property="Padding" Value="8,6"/>
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="ComboBoxItem">
+                                <Border Background="{TemplateBinding Background}"
+                                  Padding="{TemplateBinding Padding}">
+                                    <ContentPresenter/>
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Background" Value="#FF3E3E42"/>
+                                    </Trigger>
+                                    <Trigger Property="IsSelected" Value="True">
+                                        <Setter Property="Background" Value="#FF007ACC"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </Style.Resources>
+        </Style>
+
+        <!-- Modern Button Style -->
+        <Style x:Key="ModernButton" TargetType="Button">
+            <Setter Property="Background" Value="{DynamicResource BackgroundSecondaryBrush}"/>
+            <Setter Property="Foreground" Value="{DynamicResource ForegroundBrush}"/>
+            <Setter Property="BorderBrush" Value="{DynamicResource BorderBrush}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="16,8"/>
+            <Setter Property="Margin" Value="4"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="FontWeight" Value="Normal"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="4">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Margin="{TemplateBinding Padding}"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#FF3E3E42"/>
+                                <Setter Property="BorderBrush" Value="{DynamicResource AccentBrush}"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" Value="{DynamicResource AccentBrush}"/>
+                                <Setter Property="BorderBrush" Value="#FF005A9E"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Background" Value="{DynamicResource BackgroundSecondaryBrush}"/>
+                                <Setter Property="Foreground" Value="#FF808080"/>
+                                <Setter Property="BorderBrush" Value="{DynamicResource BorderBrush}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+
+        <!-- Primary Button Style (for important actions) -->
+        <Style x:Key="PrimaryButton" TargetType="Button" BasedOn="{StaticResource ModernButton}">
+            <Setter Property="Background" Value="#FF007ACC"/>
+            <Setter Property="BorderBrush" Value="#FF005A9E"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="4">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            Margin="{TemplateBinding Padding}"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#FF1C97EA"/>
+                                <Setter Property="BorderBrush" Value="#FF007ACC"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" Value="#FF005A9E"/>
+                                <Setter Property="BorderBrush" Value="#FF004578"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Success Button Style (for enable/install actions) -->
+        <Style x:Key="SuccessButton" TargetType="Button" BasedOn="{StaticResource ModernButton}">
+            <Setter Property="Background" Value="#FF107C10"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderBrush" Value="#FF0E6B0E"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="4">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Margin="{TemplateBinding Padding}"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#FF13A10E"/>
+                                <Setter Property="BorderBrush" Value="#FF107C10"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" Value="#FF0E6B0E"/>
+                                <Setter Property="BorderBrush" Value="#FF0C5A0C"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Danger Button Style (for delete/disable actions) -->
+        <Style x:Key="DangerButton" TargetType="Button" BasedOn="{StaticResource ModernButton}">
+            <Setter Property="Background" Value="#FFD13438"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderBrush" Value="#FFB52E31"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="4">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Margin="{TemplateBinding Padding}"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#FFE74C3C"/>
+                                <Setter Property="BorderBrush" Value="#FFD13438"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" Value="#FFB52E31"/>
+                                <Setter Property="BorderBrush" Value="#FF9A2629"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="WarningButton" TargetType="Button" BasedOn="{StaticResource ModernButton}">
+            <Setter Property="Background" Value="#FFF0AD4E"/>
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="BorderBrush" Value="#FFEEA236"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="4">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Margin="{TemplateBinding Padding}"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#FFFFBD5C"/>
+                                <Setter Property="BorderBrush" Value="#FFF0AD4E"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" Value="#FFEEA236"/>
+                                <Setter Property="BorderBrush" Value="#FFDF8A13"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Small Button Style -->
+        <Style x:Key="SmallButton" TargetType="Button" BasedOn="{StaticResource ModernButton}">
+            <Setter Property="Padding" Value="12,6"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="MinWidth" Value="80"/>
+        </Style>
+
+        <!-- Icon Button Style -->
+        <Style x:Key="IconButton" TargetType="Button" BasedOn="{StaticResource ModernButton}">
+            <Setter Property="Padding" Value="8"/>
+            <Setter Property="Width" Value="36"/>
+            <Setter Property="Height" Value="36"/>
+            <Setter Property="FontSize" Value="14"/>
+        </Style>
+
+        <!-- Navigation Button Style -->
+        <Style x:Key="NavButton" TargetType="Button" BasedOn="{StaticResource ModernButton}">
+            <Setter Property="Padding" Value="16,10"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="Margin" Value="0,4"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+        </Style>
+
+        <!-- Other existing styles -->
+        <Style TargetType="TextBox">
+            <Setter Property="Background" Value="{DynamicResource BackgroundSecondaryBrush}"/>
+            <Setter Property="Foreground" Value="{DynamicResource ForegroundBrush}"/>
+            <Setter Property="BorderBrush" Value="{DynamicResource BorderBrush}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="8,6"/>
+            <Setter Property="FontSize" Value="13"/>
+        </Style>
+
+        <Style TargetType="TextBlock">
+            <Setter Property="Foreground" Value="{DynamicResource ForegroundBrush}"/>
+        </Style>
+
+        <!-- Converters -->
+
+    </Window.Resources>
+
+    <Grid>
+
+        <Grid.Background>
+            <SolidColorBrush Color="#252526" Opacity="0.7"/>
+        </Grid.Background>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <!-- Header -->
+        <Border Grid.Row="0" Background="{DynamicResource BackgroundSecondaryBrush}" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="0,0,0,1">
+            <Grid Margin="20,15">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <Grid Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Column="0" Text="NStudio | BrickRigs Mod Manager" FontSize="24" FontWeight="Bold"/>
+
+                    <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                        <TextBlock x:Name="DownloadStatusText" 
+                         Text="" 
+                         Foreground="#FFCCCCCC" 
+                         Margin="0,0,10,0" 
+                         VerticalAlignment="Center"
+                         Visibility="Collapsed"/>
+
+                        <Button x:Name="CancelDownloadButton"
+                      Content="Cancel" 
+                      Style="{StaticResource SmallButton}"
+                      Click="CancelDownload_Click"
+                      Visibility="Collapsed"/>
+                    </StackPanel>
+                </Grid>
+
+                <!-- Download Progress Bar -->
+                <Grid Grid.Row="1" Margin="0,8,0,0">
+                    <ProgressBar x:Name="DownloadProgressBar" 
+                       Height="4" 
+                       Background="Transparent"
+                       BorderThickness="0"
+                       Foreground="{DynamicResource ForegroundBrush}"
+                       Maximum="100"
+                       Value="0"
+                       Visibility="Collapsed"/>
+                </Grid>
+            </Grid>
+        </Border>
+
+
+
+        <!-- Main Content -->
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="220"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Sidebar -->
+            <Border Grid.Column="0" Background="{DynamicResource BackgroundSecondaryBrush}" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="0,0,1,0">
+                <DockPanel LastChildFill="False" Height="613" VerticalAlignment="Top" Margin="0,0,-1,0">
+                    <!-- Navigation Menu -->
+                    <StackPanel DockPanel.Dock="Top" Margin="15">
+                        <TextBlock Text="Navigation" FontSize="12" Foreground="{DynamicResource ForegroundBrush}" Margin="8,0,0,8"/>
+
+                        <Button x:Name="ModManagerButton" Content="🧩 Mod Manager" 
+Style="{StaticResource ModernButton}"
+HorizontalAlignment="Stretch"
+Click="ModManagerButton_Click"/>
+
+                        <Button x:Name="FeaturedModsButton" Content="🌟 Featured Mods" 
+Style="{StaticResource ModernButton}"
+HorizontalAlignment="Stretch"
+Click="FeaturedModsButton_Click"/>
+
+                        <Button x:Name="SettingsButton" Content="⚙ Settings" 
+Style="{StaticResource ModernButton}"
+HorizontalAlignment="Stretch"
+Click="SettingsButton_Click"/>
+
+                        <Rectangle Height="1" Fill="#FF3F3F46" Margin="0,15"/>
+
+                        <!-- Game Path Section -->
+                        <TextBlock Text="Game Path" FontWeight="SemiBold" Margin="8,0,0,8"/>
+
+                        <TextBox x:Name="GamePathTextBox"
+                                IsReadOnly="True"
+                                Margin="0,0,0,8" Width="174" Height="20"/>
+
+                        <Button Content="Browse" 
+                                Style="{StaticResource ModernButton}"
+                                HorizontalAlignment="Stretch"
+                                Click="BrowseGamePath_Click"/>
+
+
+                    </StackPanel>
+                    
+
+
+                    
+
+                </DockPanel>
+            </Border>
+
+            <!-- Content Area -->
+            <Grid Grid.Column="1" Background="{DynamicResource BackgroundSecondaryBrush}">
+                <!-- Mod Manager View -->
+                <Grid x:Name="ModManagerView" Visibility="Visible">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- Header -->
+                    <Grid Grid.Row="0" Margin="20,20,20,10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Grid.Column="0" Text="Installed Mods" FontSize="20" FontWeight="SemiBold"/>
+
+                        <StackPanel Grid.Column="1" Orientation="Horizontal">
+                            <!-- Add this button next to your existing buttons in the header -->
+                            <Button Content="Create Mod Pack" 
+                                  ToolTip="Create a new mod pack from multiple mods"
+                                  Style="{StaticResource ModernButton}"
+                                  Click="CreateModPack_Click"/>
+
+                            <Button Content="Refresh" 
+                                  Style="{StaticResource SmallButton}"
+                                  Click="RefreshMods_Click"/>
+                            <Button Content="Import Mod" 
+                                  Style="{StaticResource PrimaryButton}"
+                                  Click="ImportMod_Click"/>
+                            <Button Content="Download Mod" 
+                                  Style="{StaticResource SuccessButton}"
+                                  Click="DownloadMod_Click"/>
+                        </StackPanel>
+                    </Grid>
+
+                    <!-- Mod Management Section -->
+                    <Border Grid.Row="1" Background="{DynamicResource BackgroundBrush}" Margin="20,0,20,20" Padding="20" CornerRadius="6">
+                        <Grid>
+                            <!-- Empty State -->
+                            <Border x:Name="EmptyStatePanel" Visibility="Collapsed"
+              Background="{DynamicResource BackgroundSecondaryBrush}" 
+              CornerRadius="6" 
+              Padding="40">
+                                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    <TextBlock Text="📦" FontSize="48" HorizontalAlignment="Center" Margin="0,0,0,15"/>
+                                    <TextBlock Text="No mods installed" FontSize="18" FontWeight="SemiBold" HorizontalAlignment="Center" Margin="0,0,0,5"/>
+                                    <TextBlock Text="Import a mod file or browse featured mods to get started" 
+                         FontSize="14" Foreground="{DynamicResource ForegroundBrush}" HorizontalAlignment="Center"/>
+                                </StackPanel>
+                            </Border>
+
+                            <!-- Mods List -->
+                            <ScrollViewer x:Name="ModsScrollViewer" VerticalScrollBarVisibility="Auto">
+                                <ItemsControl x:Name="InstalledModsList">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <Border Background="{DynamicResource BackgroundSecondaryBrush}" 
+                              Margin="0,0,0,8" 
+                              Padding="20" 
+                              CornerRadius="6"
+                              BorderBrush="#FF3F3F46" 
+                              BorderThickness="1">
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="*"/>
+                                                        <ColumnDefinition Width="Auto"/>
+                                                    </Grid.ColumnDefinitions>
+
+                                                    <StackPanel Grid.Column="0">
+                                                        <TextBlock Text="{Binding FriendlyName}" 
+                                             FontSize="16" 
+                                             FontWeight="SemiBold" 
+                                             Margin="0,0,0,4" Foreground="{DynamicResource ForegroundBrush}"/>
+                                                        <TextBlock Text="{Binding CreatedBy, StringFormat='By {0}'}" 
+                                             FontSize="12" 
+                                             Foreground="{DynamicResource ForegroundBrush}" 
+                                             Margin="0,0,0,4"/>
+                                                        <TextBlock Text="{Binding Description}" 
+                                             FontSize="13" 
+                                             Foreground="{DynamicResource ForegroundBrush}"  
+                                             TextWrapping="Wrap"
+                                             Margin="0,0,0,4"/>
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <TextBlock Text="{Binding VersionName, StringFormat='Version: {0}'}" 
+                                                 FontSize="12" 
+                                                 Foreground="{DynamicResource ForegroundBrush}"/>
+                                                            <TextBlock Text=" • " 
+                                                 FontSize="12" 
+                                                 Foreground="{DynamicResource ForegroundBrush}"/>
+                                                            <TextBlock>
+                                                                <TextBlock.Style>
+                                                                    <Style TargetType="TextBlock">
+                                                                        <Style.Triggers>
+                                                                            <DataTrigger Binding="{Binding IsEnabled}" Value="True">
+                                                                                <Setter Property="Text" Value="Enabled"/>
+                                                                                <Setter Property="Foreground" Value="LightGreen"/>
+                                                                            </DataTrigger>
+                                                                            <DataTrigger Binding="{Binding IsEnabled}" Value="False">
+                                                                                <Setter Property="Text" Value="Disabled"/>
+                                                                                <Setter Property="Foreground" Value="Orange"/>
+                                                                            </DataTrigger>
+                                                                        </Style.Triggers>
+                                                                    </Style>
+                                                                </TextBlock.Style>
+                                                            </TextBlock>
+                                                            <!-- Show Pak Mod indicator if applicable -->
+                                                            <TextBlock Text=" • PAK Mod" 
+                                                 FontSize="12" 
+                                                 Foreground="#FF888888">
+                                                                <TextBlock.Style>
+                                                                    <Style TargetType="TextBlock">
+                                                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                                                        <Style.Triggers>
+                                                                            <DataTrigger Binding="{Binding IsPakMod}" Value="True">
+                                                                                <Setter Property="Visibility" Value="Visible"/>
+                                                                            </DataTrigger>
+                                                                        </Style.Triggers>
+                                                                    </Style>
+                                                                </TextBlock.Style>
+                                                            </TextBlock>
+                                                        </StackPanel>
+                                                    </StackPanel>
+
+                                                    <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                                                        <!-- Toggle Enable/Disable Button -->
+                                                        <Button Tag="{Binding}" Click="ToggleMod_Click">
+                                                            <Button.Style>
+                                                                <Style TargetType="Button" BasedOn="{StaticResource ModernButton}">
+                                                                    <Style.Triggers>
+                                                                        <DataTrigger Binding="{Binding IsEnabled}" Value="True">
+                                                                            <Setter Property="Content" Value="Disable"/>
+                                                                            <Setter Property="Background" Value="#FFF0AD4E"/>
+                                                                            <Setter Property="Foreground" Value="Black"/>
+                                                                            <Setter Property="BorderBrush" Value="#FFEEA236"/>
+                                                                        </DataTrigger>
+                                                                        <DataTrigger Binding="{Binding IsEnabled}" Value="False">
+                                                                            <Setter Property="Content" Value="Enable"/>
+                                                                            <Setter Property="Background" Value="#FF107C10"/>
+                                                                            <Setter Property="Foreground" Value="White"/>
+                                                                            <Setter Property="BorderBrush" Value="#FF0E6B0E"/>
+                                                                        </DataTrigger>
+                                                                    </Style.Triggers>
+                                                                </Style>
+                                                            </Button.Style>
+                                                        </Button>
+
+
+                                                        <!-- Delete Button -->
+                                                        <Button Content="Delete" 
+                                          Style="{StaticResource DangerButton}"
+                                          Tag="{Binding}" 
+                                          Click="DeleteMod_Click"/>
+
+                                                        <!-- Create Metadata Button (only for PAK mods without metadata) -->
+                                                        <Button Tag="{Binding}" 
+                                          Click="CreatePakMeta_Click">
+                                                            <Button.Style>
+                                                                <Style TargetType="Button" BasedOn="{StaticResource ModernButton}">
+                                                                    <Setter Property="Content" Value="Create Metadata"/>
+                                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                                    <Style.Triggers>
+                                                                        <DataTrigger Binding="{Binding Description}" Value="Pak mod without metadata">
+                                                                            <Setter Property="Visibility" Value="Visible"/>
+                                                                        </DataTrigger>
+                                                                    </Style.Triggers>
+                                                                </Style>
+                                                            </Button.Style>
+                                                        </Button>
+
+                                                        <!-- Create PakBundle Button (only for PAK mods) -->
+                                                        <Button Tag="{Binding}" 
+                                          Click="CreatePakBundle_Click">
+                                                            <Button.Style>
+                                                                <Style TargetType="Button" BasedOn="{StaticResource ModernButton}">
+                                                                    <Setter Property="Content" Value="Create Bundle"/>
+                                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                                    <Style.Triggers>
+                                                                        <DataTrigger Binding="{Binding IsPakMod}" Value="True">
+                                                                            <Setter Property="Visibility" Value="Visible"/>
+                                                                        </DataTrigger>
+                                                                    </Style.Triggers>
+                                                                </Style>
+                                                            </Button.Style>
+                                                        </Button>
+                                                    </StackPanel>
+                                                </Grid>
+                                            </Border>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </ScrollViewer>
+                        </Grid>
+                    </Border>
+                </Grid>
+                <Grid x:Name="FeaturedModsView" Visibility="Collapsed">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- Header -->
+                    <Grid Grid.Row="0" Margin="20,20,20,10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Grid.Column="0" Text="Featured Mods" FontSize="20" FontWeight="SemiBold" Foreground="{DynamicResource ForegroundBrush}"/>
+                        <Button Grid.Column="1" Content="Refresh" 
+                Style="{StaticResource SmallButton}"
+                Click="RefreshFeatured_Click"/>
+                    </Grid>
+
+                    <!-- Main Content Area -->
+                    <ScrollViewer x:Name="FeaturedModsScrollViewer" Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Hidden" Margin="20,0,20,20">
+                        <StackPanel>
+                            <!-- Categories Section -->
+                            <StackPanel Margin="0,0,0,20">
+                                <Grid Margin="0,0,0,10">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="250"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <TextBlock Grid.Column="0" Text="Category:" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                                    <ComboBox x:Name="CategoryComboBox" Grid.Column="1" 
+                              Style="{StaticResource ModernComboBox}"
+                              SelectionChanged="CategoryComboBox_SelectionChanged">
+                                        <!-- This will be populated in code-behind as before -->
+                                    </ComboBox>
+                                </Grid>
+                            </StackPanel>
+
+                            <!-- Featured Mods Section -->
+                            <StackPanel Margin="0,0,0,30">
+                                <Grid Margin="0,0,0,15">
+                                    <TextBlock Text="Featured Mods" 
+                               FontSize="20" 
+                               FontWeight="Bold" 
+                               Foreground="{DynamicResource ForegroundBrush}"/>
+                                </Grid>
+
+                                <!-- Featured Mods with responsive WrapPanel -->
+                                <ItemsControl x:Name="FeaturedModsItemsControl">
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <WrapPanel x:Name="ModsWrapPanel" />
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <Border Background="{DynamicResource BackgroundBrush}" 
+            Width="220" Height="200"
+            Margin="0,0,10,10" 
+            CornerRadius="8" 
+            BorderBrush="#FF3F3F46" 
+            BorderThickness="1"
+            Tag="{Binding}"
+            MouseLeftButtonUp="FeaturedMod_Click"
+            Cursor="Hand">
+                                                <Border.Style>
+                                                    <Style TargetType="Border">
+                                                        <Style.Triggers>
+                                                            <Trigger Property="IsMouseOver" Value="True">
+                                                                <Setter Property="BorderBrush" Value="#FF007ACC"/>
+                                                                <Setter Property="Background" Value="#FF2D2D30"/>
+                                                            </Trigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Border.Style>
+
+                                                <Grid>
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition Height="110"/>
+                                                        <RowDefinition Height="*"/>
+                                                    </Grid.RowDefinitions>
+
+                                                    <!-- Mod Image -->
+                                                    <Border Grid.Row="0" Background="#FF2D2D30" CornerRadius="8,8,0,0">
+                                                        <Border CornerRadius="8,8,0,0">
+                                                            <Border.Clip>
+                                                                <RectangleGeometry RadiusX="8" RadiusY="8" Rect="0,0,220,110"/>
+                                                            </Border.Clip>
+                                                            <Image Source="{Binding ImageUrl}" 
+                           Stretch="UniformToFill"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"/>
+                                                        </Border>
+                                                    </Border>
+
+                                                    <!-- Mod Info -->
+                                                    <StackPanel Grid.Row="1" Margin="10">
+                                                        <TextBlock Text="{Binding Name}" 
+                           FontSize="13" 
+                           FontWeight="SemiBold" 
+                           TextWrapping="Wrap"
+                           TextTrimming="CharacterEllipsis"
+                           MaxHeight="40" 
+                           Foreground="{DynamicResource ForegroundBrush}"/>
+
+                                                        <TextBlock Text="{Binding Category}" 
+                           FontSize="11" 
+                           Foreground="{DynamicResource ForegroundBrush}"
+                           TextTrimming="CharacterEllipsis"
+                           Margin="0,2,0,0"/>
+
+                                                        <TextBlock Text="{Binding Author, StringFormat='By {0}'}" 
+                           FontSize="11" 
+                           Foreground="{DynamicResource ForegroundBrush}" 
+                           TextTrimming="CharacterEllipsis"
+                           Margin="0,3,0,0"/>
+                                                    </StackPanel>
+                                                </Grid>
+                                            </Border>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </StackPanel>
+                        </StackPanel>
+                    </ScrollViewer>
+                </Grid>
+                <!-- Settings View -->
+                <!-- Settings View -->
+                <Grid x:Name="SettingsView" Visibility="Collapsed">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- Header -->
+                    <Grid Grid.Row="0" Margin="20,20,20,10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Grid.Column="0" Text="Settings" FontSize="20" FontWeight="SemiBold"/>
+                    </Grid>
+
+                    <!-- Settings Content -->
+                    <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Hidden" Margin="20,0,20,20">
+                        <StackPanel>
+                            <!-- Theme Settings -->
+                            <Border Background="{DynamicResource BackgroundSecondaryBrush}" Padding="20" CornerRadius="8" Margin="0,0,0,20">
+                                <StackPanel>
+                                    <TextBlock Text="Theme Settings" FontSize="18" FontWeight="SemiBold" Margin="0,0,0,15"/>
+
+                                    <Grid Margin="0,0,0,10">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <TextBlock Grid.Column="0" Text="Theme:" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                                        <ComboBox x:Name="ThemeSelector" Style="{StaticResource ModernComboBox}" Grid.Column="1" 
+                                  SelectionChanged="ThemeSelector_SelectionChanged" Foreground="{DynamicResource ForegroundBrush}">
+                                            <ComboBoxItem Content="Dark" Foreground="{DynamicResource ForegroundBrush}"/>
+                                            <ComboBoxItem Content="Light (why)" Foreground="{DynamicResource ForegroundBrush}"/>
+                                            <ComboBoxItem Content="Red" Foreground="{DynamicResource ForegroundBrush}"/>
+                                            <ComboBoxItem Content="Green" Foreground="{DynamicResource ForegroundBrush}"/>
+                                            <ComboBoxItem Content="Blue" Foreground="{DynamicResource ForegroundBrush}"/>
+                                            <ComboBoxItem Content="Purple" Foreground="{DynamicResource ForegroundBrush}"/>
+                                            <ComboBoxItem Content="Orange" Foreground="{DynamicResource ForegroundBrush}"/>
+                                            <ComboBoxItem Content="Teal" Foreground="{DynamicResource ForegroundBrush}"/>
+                                            <ComboBoxItem Content="Pink" Foreground="{DynamicResource ForegroundBrush}"/>
+                                            <ComboBoxItem Content="Yellow" Foreground="{DynamicResource ForegroundBrush}"/>
+                                            <ComboBoxItem Content="High Contrast" Foreground="{DynamicResource ForegroundBrush}"/>
+                                        </ComboBox>
+                                    </Grid>
+                                </StackPanel>
+                            </Border>
+
+                            
+
+                            <!-- About Section -->
+                            <Border Background="{DynamicResource BackgroundSecondaryBrush}" Padding="20" CornerRadius="8">
+                                <StackPanel>
+                                    <TextBlock Text="About" FontSize="18" FontWeight="SemiBold" Margin="0,0,0,15"/>
+
+                                    <StackPanel Margin="0,0,0,15">
+                                        <TextBlock Text="Brick Rigs Mod Manager" FontSize="14" FontWeight="SemiBold"/>
+                                        <TextBlock Text="Version 1.0.18.1ATPR" FontSize="12" Foreground="{DynamicResource ForegroundSecondaryBrush}"/>
+                                        <TextBlock Text="© 2025 NuggStudio" FontSize="12" Foreground="{DynamicResource ForegroundSecondaryBrush}" Margin="0,5,0,0"/>
+                                    </StackPanel>
+
+                                    <Button Content="Check for Updates" Style="{StaticResource ModernButton}"
+                            HorizontalAlignment="Left" Margin="0,10,0,0"
+                            Click="CheckForUpdates_Click"/>
+                                </StackPanel>
+                            </Border>
+                            <StackPanel DockPanel.Dock="Left" Height="92">
+                                <Rectangle Height="1" Fill="#FF3F3F46" Margin="0,0,0,15"/>
+                                <TextBlock Text="ALPHA TESTING" Foreground="Orange" Width="188"/>
+                                <TextBlock Text="VERSION V1.0.18.0AT" Foreground="LightGreen" Margin="0,0,0,5" Width="188"/>
+                                <TextBlock x:Name="ModCountTextBlock" Text="Not for distribution from testers." FontSize="12" Foreground="#FFCCCCCC" Width="193"/>
+                            </StackPanel>
+
+                        </StackPanel>
+                    </ScrollViewer>
+                </Grid>
+
+
+
+                <!-- Mod Detail View -->
+                <Grid x:Name="ModDetailView" Visibility="Collapsed">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="200"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- Back Button -->
+                    <Button Grid.Row="0" Content="← Back to Featured Mods" 
+                          Style="{StaticResource ModernButton}"
+                          HorizontalAlignment="Left" 
+                          Margin="20,20,0,10"
+                          Click="BackButton_Click"/>
+
+                    <!-- Banner -->
+                    <Border Grid.Row="1" Margin="20,0,20,20" CornerRadius="8" ClipToBounds="True">
+                        <Image x:Name="DetailBannerImage" Stretch="UniformToFill"/>
+                    </Border>
+
+                    <!-- Content -->
+                    <Grid Grid.Row="2" Margin="20,0,20,20">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="300"/>
+                        </Grid.ColumnDefinitions>
+
+                        <!-- Description -->
+                        <StackPanel Grid.Column="0" Margin="0,0,20,0">
+                            <TextBlock x:Name="DetailNameText" FontSize="28" FontWeight="Bold" Margin="0,0,0,5"/>
+                            <TextBlock x:Name="DetailAuthorText" FontSize="16" Foreground="#FFCCCCCC" Margin="0,0,0,10"/>
+                            <TextBlock x:Name="DetailVersionText" FontSize="14" Foreground="#FF888888" Margin="0,0,0,20"/>
+                            <TextBlock Text="Description" FontSize="18" FontWeight="SemiBold" Margin="0,0,0,10"/>
+                            <TextBlock x:Name="DetailDescriptionText" FontSize="14" TextWrapping="Wrap" LineHeight="20"/>
+                        </StackPanel>
+
+                        <!-- Sidebar -->
+                        <Border Grid.Column="1" Background="{DynamicResource BackgroundBrush}" CornerRadius="8" Padding="20">
+                            <StackPanel>
+                                <Image x:Name="DetailLogoImage" Width="80" Height="80" Margin="0,0,0,20"/>
+                                <Button x:Name="DetailDownloadButton" Content="Download &amp; Install" 
+                                      Style="{StaticResource ModernButton}"
+                                      HorizontalAlignment="Stretch"
+                                      Padding="0,12"
+                                      FontSize="14"
+                                      FontWeight="SemiBold"
+                                      Click="DetailDownload_Click"/>
+                            </StackPanel>
+                        </Border>
+                    </Grid>
+                </Grid>
+            </Grid>
+        </Grid>
+    </Grid>
+</Window>
