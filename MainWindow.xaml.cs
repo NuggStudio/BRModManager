@@ -957,7 +957,7 @@ namespace BrickRigsModManager
         {
             try
             {
-                var json = await _httpClient.GetStringAsync("https://raw.githubusercontent.com/NuggStudio/Brick-Rigs-Mod-Manager/refs/heads/main/featured_mods.json");
+                var json = await _httpClient.GetStringAsync("enter your own things");
 
                 // Create a wrapper class to match the JSON structure
                 var wrapper = JsonConvert.DeserializeObject<FeaturedModsWrapper>(json);
@@ -2201,4 +2201,5 @@ namespace BrickRigsModManager
     }
     
 } 
+
 
