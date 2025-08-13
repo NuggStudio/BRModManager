@@ -79,7 +79,7 @@ namespace BrickRigsModManager
             _installedMods = new ObservableCollection<ModInfo>();
             _featuredMods = new ObservableCollection<FeaturedModInfo>();
             _updateService = new UpdateService(
-        "https://raw.githubusercontent.com/NuggStudio/Brick-Rigs-Mod-Manager/refs/heads/main/brmodmanagerversion.json",
+        "enter your own things",
         _currentVersion);
             this.PreviewMouseRightButtonUp += (s, e) => ReleaseMouseCapture();
             this.PreviewMouseMove += ScrollViewer_PreviewMouseMove;
@@ -2201,3 +2201,4 @@ namespace BrickRigsModManager
     }
     
 } 
+
